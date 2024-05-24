@@ -102,6 +102,11 @@ struct GameView: View {
                     .font(.title2)
                     .foregroundStyle(matchManager.currentlyDrawing ? .primaryYellow : .primaryPurple)
             } // HStack
+            
+            Text("Score:\(matchManager.score)")
+                .bold()
+                .font(.title)
+                .foregroundStyle(matchManager.currentlyDrawing ? .primaryYellow : .primaryPurple)
         } // ZStack
         .padding(.vertical, 15)
     }
