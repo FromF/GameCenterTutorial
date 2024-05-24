@@ -14,7 +14,7 @@ class MatchManager: ObservableObject {
     
     @Published var currentlyDrawing: Bool = false
     @Published var drawPrompt = ""
-    @Published var PassGuesses: [PastGuess] = []
+    @Published var passGuesses: [PastGuess] = []
     
     @Published var score = 0
     @Published var remainingTime = maxTimeRemaining

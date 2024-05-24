@@ -15,6 +15,8 @@
 		9D3EB1192C00339C00C6B32F /* MatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB1182C00339C00C6B32F /* MatchManager.swift */; };
 		9D3EB11B2C0033B400C6B32F /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB11A2C0033B400C6B32F /* Misc.swift */; };
 		9D3EB11D2C00561A00C6B32F /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB11C2C00561A00C6B32F /* GameOverView.swift */; };
+		9D3EB11F2C005A7700C6B32F /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB11E2C005A7700C6B32F /* GameView.swift */; };
+		9D3EB1212C005C8400C6B32F /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB1202C005C8400C6B32F /* DrawingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		9D3EB1182C00339C00C6B32F /* MatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchManager.swift; sourceTree = "<group>"; };
 		9D3EB11A2C0033B400C6B32F /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		9D3EB11C2C00561A00C6B32F /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		9D3EB11E2C005A7700C6B32F /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		9D3EB1202C005C8400C6B32F /* DrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,8 @@
 				9D3EB1082C00320B00C6B32F /* Guess_The_DoodleApp.swift */,
 				9D3EB10A2C00320B00C6B32F /* ContentView.swift */,
 				9D3EB1162C00338500C6B32F /* MenuView.swift */,
+				9D3EB11E2C005A7700C6B32F /* GameView.swift */,
+				9D3EB1202C005C8400C6B32F /* DrawingView.swift */,
 				9D3EB11C2C00561A00C6B32F /* GameOverView.swift */,
 				9D3EB1182C00339C00C6B32F /* MatchManager.swift */,
 				9D3EB11A2C0033B400C6B32F /* Misc.swift */,
@@ -152,9 +158,11 @@
 				9D3EB10B2C00320B00C6B32F /* ContentView.swift in Sources */,
 				9D3EB1192C00339C00C6B32F /* MatchManager.swift in Sources */,
 				9D3EB1172C00338500C6B32F /* MenuView.swift in Sources */,
+				9D3EB1212C005C8400C6B32F /* DrawingView.swift in Sources */,
 				9D3EB11B2C0033B400C6B32F /* Misc.swift in Sources */,
 				9D3EB11D2C00561A00C6B32F /* GameOverView.swift in Sources */,
 				9D3EB1092C00320B00C6B32F /* Guess_The_DoodleApp.swift in Sources */,
+				9D3EB11F2C005A7700C6B32F /* GameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
