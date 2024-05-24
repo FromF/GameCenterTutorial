@@ -28,9 +28,9 @@ struct GameOverView: View {
             Spacer()
             
             Button {
-                
+                matchManager.resetGame()
             } label: {
-                Text("MENU")
+                Text("Menu")
                     .foregroundStyle(.menuBtn)
                     .brightness(-0.4)
                     .font(.largeTitle)

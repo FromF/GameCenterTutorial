@@ -12,13 +12,13 @@ struct DrawingView: UIViewRepresentable {
     @ObservedObject var matchManager: MatchManager
     @Binding var eraserEnabled: Bool
     
-    var canvasView = PKCanvasView()
-    
     func makeCoordinator() -> Coordinator {
         Coordinator(matchManager: matchManager)
     }
     
     func makeUIView(context: Context) -> PKCanvasView {
+        let canvasView = PKCanvasView()
+        
         canvasView.drawingPolicy = .anyInput
         canvasView.tool = PKInkingTool(.pen, color: .black, width: 5)
         canvasView.delegate = context.coordinator
@@ -28,9 +28,18 @@ struct DrawingView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
+        let wasDrawing = uiView.isUserInteractionEnabled
+        uiView.isUserInteractionEnabled = matchManager.currentlyDrawing
         
+        if !wasDrawing && matchManager.currentlyDrawing {
+            uiView.drawing = PKDrawing()
+        }
         
-        canvasView.tool = eraserEnabled ? PKEraserTool(.vector) : PKInkingTool(.pen, color: .black, width: 5)
+        if !uiView.isUserInteractionEnabled || !matchManager.inGame {
+            uiView.drawing = matchManager.lastRecivedDrawing
+        }
+        
+        uiView.tool = eraserEnabled ? PKEraserTool(.vector) : PKInkingTool(.pen, color: .black, width: 5)
     }
     
     class Coordinator: NSObject, PKCanvasViewDelegate {
@@ -41,10 +50,10 @@ struct DrawingView: UIViewRepresentable {
         }
         
         func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-            
+            guard canvasView.isUserInteractionEnabled else { return }
+            matchManager.sendData(canvasView.drawing.dataRepresentation(), mode: .reliable)
         }
     }
-    
 }
 
 #Preview {
