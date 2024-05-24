@@ -17,6 +17,9 @@
 		9D3EB11D2C00561A00C6B32F /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB11C2C00561A00C6B32F /* GameOverView.swift */; };
 		9D3EB11F2C005A7700C6B32F /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB11E2C005A7700C6B32F /* GameView.swift */; };
 		9D3EB1212C005C8400C6B32F /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB1202C005C8400C6B32F /* DrawingView.swift */; };
+		9D3EB1242C0071C300C6B32F /* debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB1232C0071C300C6B32F /* debug.swift */; };
+		9D3EB1262C00749200C6B32F /* MatchManager- GKMatchmaker+ViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB1252C00749200C6B32F /* MatchManager- GKMatchmaker+ViewControllerDelegate.swift */; };
+		9D3EB1282C0075A300C6B32F /* MatchManager+GKMatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB1272C0075A300C6B32F /* MatchManager+GKMatchDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,10 @@
 		9D3EB11C2C00561A00C6B32F /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		9D3EB11E2C005A7700C6B32F /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		9D3EB1202C005C8400C6B32F /* DrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
+		9D3EB1222C006FAF00C6B32F /* Guess The Doodle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Guess The Doodle.entitlements"; sourceTree = "<group>"; };
+		9D3EB1232C0071C300C6B32F /* debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = debug.swift; sourceTree = "<group>"; };
+		9D3EB1252C00749200C6B32F /* MatchManager- GKMatchmaker+ViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatchManager- GKMatchmaker+ViewControllerDelegate.swift"; sourceTree = "<group>"; };
+		9D3EB1272C0075A300C6B32F /* MatchManager+GKMatchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatchManager+GKMatchDelegate.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +70,8 @@
 		9D3EB1072C00320B00C6B32F /* Guess The Doodle */ = {
 			isa = PBXGroup;
 			children = (
+				9D3EB1222C006FAF00C6B32F /* Guess The Doodle.entitlements */,
+				9D3EB1232C0071C300C6B32F /* debug.swift */,
 				9D3EB1082C00320B00C6B32F /* Guess_The_DoodleApp.swift */,
 				9D3EB10A2C00320B00C6B32F /* ContentView.swift */,
 				9D3EB1162C00338500C6B32F /* MenuView.swift */,
@@ -70,6 +79,8 @@
 				9D3EB1202C005C8400C6B32F /* DrawingView.swift */,
 				9D3EB11C2C00561A00C6B32F /* GameOverView.swift */,
 				9D3EB1182C00339C00C6B32F /* MatchManager.swift */,
+				9D3EB1252C00749200C6B32F /* MatchManager- GKMatchmaker+ViewControllerDelegate.swift */,
+				9D3EB1272C0075A300C6B32F /* MatchManager+GKMatchDelegate.swift */,
 				9D3EB11A2C0033B400C6B32F /* Misc.swift */,
 				9D3EB10C2C00320C00C6B32F /* Assets.xcassets */,
 				9D3EB10E2C00320C00C6B32F /* Preview Content */,
@@ -157,8 +168,11 @@
 			files = (
 				9D3EB10B2C00320B00C6B32F /* ContentView.swift in Sources */,
 				9D3EB1192C00339C00C6B32F /* MatchManager.swift in Sources */,
+				9D3EB1282C0075A300C6B32F /* MatchManager+GKMatchDelegate.swift in Sources */,
 				9D3EB1172C00338500C6B32F /* MenuView.swift in Sources */,
+				9D3EB1262C00749200C6B32F /* MatchManager- GKMatchmaker+ViewControllerDelegate.swift in Sources */,
 				9D3EB1212C005C8400C6B32F /* DrawingView.swift in Sources */,
+				9D3EB1242C0071C300C6B32F /* debug.swift in Sources */,
 				9D3EB11B2C0033B400C6B32F /* Misc.swift in Sources */,
 				9D3EB11D2C00561A00C6B32F /* GameOverView.swift in Sources */,
 				9D3EB1092C00320B00C6B32F /* Guess_The_DoodleApp.swift in Sources */,
@@ -293,6 +307,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Guess The Doodle/Guess The Doodle.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Guess The Doodle/Preview Content\"";
@@ -322,6 +337,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Guess The Doodle/Guess The Doodle.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Guess The Doodle/Preview Content\"";
