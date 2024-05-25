@@ -24,7 +24,11 @@ class MatchManager: NSObject, ObservableObject {
     @Published var remainingTime = maxTimeRemaining {
         willSet {
             if isTimerKeeper {
-                sendCommand(.timer, parameter: "\(newValue)")
+                let structureValue = CommunicationStructure(
+                    signaature: .timer,
+                    UUIDKey: nil, time: newValue, guess: nil, drawing: nil
+                )
+                send(structureValue)
                 if newValue < 0 {
                     gameOver()
                 }
@@ -102,7 +106,11 @@ class MatchManager: NSObject, ObservableObject {
         otherPlayer = self.match?.players.first
         drawPrompt = everydayObjects.randomElement()!
         
-        sendCommand(.begin, parameter: playerUUIDKey)
+        let structureValue = CommunicationStructure(
+            signaature: .begin,
+            UUIDKey: playerUUIDKey, time: nil, guess: nil, drawing: nil
+        )
+        send(structureValue)
     }
     func swapRole() {
         score += 1
@@ -112,7 +120,11 @@ class MatchManager: NSObject, ObservableObject {
     
     func gameOver() {
         isGameOver = true
-        sendCommand(.gameOver, parameter: "")
+        let structureValue = CommunicationStructure(
+            signaature: .gameOver,
+            UUIDKey: nil, time: nil, guess: nil, drawing: nil
+        )
+        send(structureValue)
         match?.disconnect()
     }
     
@@ -134,43 +146,79 @@ class MatchManager: NSObject, ObservableObject {
         playerUUIDKey = UUID().uuidString
     }
     
-    func recevedString(_ signature: CommunicationSignature, parameter: String) {
-        switch signature {
+    func receviedStructure(_ structure: CommunicationStructure) {
+        switch structure.signaature {
         case .begin:
-            if playerUUIDKey == parameter {
+            guard let UUIDKey = structure.UUIDKey else {
+                return
+            }
+            
+            if playerUUIDKey == UUIDKey {
                 playerUUIDKey = UUID().uuidString
-                sendCommand(.begin, parameter: playerUUIDKey)
+                
+                let structureValue = CommunicationStructure(
+                    signaature: .begin,
+                    UUIDKey: playerUUIDKey, time: nil, guess: nil, drawing: nil
+                )
+                send(structureValue)
                 break
             }
             
-            currentlyDrawing = playerUUIDKey < parameter
+            currentlyDrawing = playerUUIDKey < UUIDKey
             inGame = true
             isTimerKeeper = currentlyDrawing
             
         case .timer:
-            remainingTime = Int(parameter) ?? 0
+            remainingTime = structure.time ?? 0
             
         case .guess:
+            guard let guess = structure.guess else {
+                return
+            }
             var guessCorrect = false
-            if parameter.lowercased() == drawPrompt {
-                sendCommand(.correct, parameter: parameter)
+            if guess.lowercased() == drawPrompt {
+                let structureValue = CommunicationStructure(
+                    signaature: .correct,
+                    UUIDKey: nil, time: nil, guess: guess, drawing: nil
+                )
+                send(structureValue)
                 swapRole()
                 guessCorrect = true
             } else {
-                sendCommand(.incorrect, parameter: parameter)
+                let structureValue = CommunicationStructure(
+                    signaature: .incorrect,
+                    UUIDKey: nil, time: nil, guess: guess, drawing: nil
+                )
+                send(structureValue)
             }
             
-            appendPastGuess(guess: parameter, correct: guessCorrect)
+            appendPastGuess(guess: guess, correct: guessCorrect)
             
         case .correct:
+            guard let guess = structure.guess else {
+                return
+            }
             swapRole()
-            appendPastGuess(guess: parameter, correct: true)
+            appendPastGuess(guess: guess, correct: true)
             
         case .incorrect:
-            appendPastGuess(guess: parameter, correct: false)
+            guard let guess = structure.guess else {
+                return
+            }
+            appendPastGuess(guess: guess, correct: false)
             
         case .gameOver:
             isGameOver = true
+            
+        case .drawing:
+            guard let drawing = structure.drawing else {
+                return
+            }
+            do {
+                lastRecivedDrawing = try PKDrawing(data: drawing)
+            } catch {
+                errorLog(error)
+            }
         }
     }
     

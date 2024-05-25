@@ -17,7 +17,12 @@ struct GameView: View {
             return
         }
         
-        matchManager.sendCommand(.guess, parameter: drawingGuess)
+        let structureValue = CommunicationStructure(
+            signaature: .guess,
+            UUIDKey: nil, time: nil, guess: drawingGuess, drawing: nil
+        )
+        matchManager.send(structureValue)
+
         drawingGuess = ""
     }
 

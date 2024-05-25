@@ -11,36 +11,32 @@ import PencilKit
 
 extension MatchManager: GKMatchDelegate {    
     func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
-        let content = String(decoding: data, as: UTF8.self)
-        
-        if content.starts(with: "\(communicationStringPrefix):") {
-            let message = content.replacing("\(communicationStringPrefix):", with: "")
-            let messageSplit = message.split(separator: ":")
-            let messagePrefix = String(messageSplit.first ?? "") 
-            guard let signature = CommunicationSignature(rawValue: messagePrefix) else { return }
-            let parameter = String(messageSplit.last ?? "")
-            
-            recevedString(signature, parameter: parameter)
-        } else {
-            do {
-                lastRecivedDrawing = try PKDrawing(data: data)
-            } catch {
-                errorLog(error)
-            }
+        do {
+            let decoder = JSONDecoder()
+            let receviedStructureValue = try decoder.decode(CommunicationStructure.self, from: data)
+            receviedStructure(receviedStructureValue)
+        } catch {
+            errorLog(error)
         }
     }
     
-    func sendCommand(_ signature: CommunicationSignature, parameter: String) {
-        sendString("\(signature.rawValue):\(parameter)")
-    }
-    
     func sendDrawing(_ drawing: PKDrawing) {
-        sendData(drawing.dataRepresentation(), mode: .reliable)
+        let structureValue = CommunicationStructure(
+            signaature: .drawing,
+            UUIDKey: nil, time: nil, guess: nil,
+            drawing: drawing.dataRepresentation()
+        )
+        send(structureValue)
     }
     
-    private func sendString(_ message: String) {
-        guard let encoded = "\(communicationStringPrefix):\(message)".data(using: .utf8) else { return }
-        sendData(encoded, mode: .reliable)
+    func send(_ structureValue: CommunicationStructure) {
+        do {
+            let encoder = JSONEncoder()
+            let encoded = try encoder.encode(structureValue)
+            sendData(encoded, mode: .reliable)
+        } catch {
+            errorLog(error)
+        }
     }
     
     private func sendData(_ data: Data, mode: GKMatch.SendDataMode) {

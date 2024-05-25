@@ -50,13 +50,24 @@ struct PastGuess: Identifiable {
 
 let maxTimeRemaining = 100
 
-let communicationStringPrefix = "strData"
-
-enum CommunicationSignature: String {
+enum CommunicationSignature: String, Codable {
     case begin = "begin"
     case timer = "timer"
     case guess = "guess"
     case correct = "correct"
     case incorrect = "incorrect"
     case gameOver = "gameOver"
+    case drawing = "drawing"
+}
+
+struct CommunicationStructure: Codable {
+    let signaature: CommunicationSignature
+    // .begin
+    let UUIDKey: String?
+    // .timer
+    let time: Int?
+    // .guess/.correct/.incorrect
+    let guess: String?
+    // .drawing
+    let drawing: Data?
 }
