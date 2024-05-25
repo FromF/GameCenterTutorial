@@ -9,13 +9,18 @@ import Foundation
 import GameKit
 import PencilKit
 
-extension MatchManager: GKMatchDelegate {
+extension MatchManager: GKMatchDelegate {    
     func match(_ match: GKMatch, didReceive data: Data, fromRemotePlayer player: GKPlayer) {
         let content = String(decoding: data, as: UTF8.self)
         
-        if content.starts(with: "strData:") {
-            let message = content.replacing("strData:", with: "")
-            recevedString(message)
+        if content.starts(with: "\(communicationStringPrefix):") {
+            let message = content.replacing("\(communicationStringPrefix):", with: "")
+            let messageSplit = message.split(separator: ":")
+            let messagePrefix = String(messageSplit.first ?? "") 
+            guard let signature = CommunicationSignature(rawValue: messagePrefix) else { return }
+            let parameter = String(messageSplit.last ?? "")
+            
+            recevedString(signature, parameter: parameter)
         } else {
             do {
                 lastRecivedDrawing = try PKDrawing(data: data)
@@ -25,12 +30,20 @@ extension MatchManager: GKMatchDelegate {
         }
     }
     
-    func sendString(_ message: String) {
-        guard let encoded = "strData:\(message)".data(using: .utf8) else { return }
+    func sendCommand(_ signature: CommunicationSignature, parameter: String) {
+        sendString("\(signature.rawValue):\(parameter)")
+    }
+    
+    func sendDrawing(_ drawing: PKDrawing) {
+        sendData(drawing.dataRepresentation(), mode: .reliable)
+    }
+    
+    private func sendString(_ message: String) {
+        guard let encoded = "\(communicationStringPrefix):\(message)".data(using: .utf8) else { return }
         sendData(encoded, mode: .reliable)
     }
     
-    func sendData(_ data: Data, mode: GKMatch.SendDataMode) {
+    private func sendData(_ data: Data, mode: GKMatch.SendDataMode) {
         do {
             try match?.sendData(toAllPlayers: data, with: mode)
         } catch {
@@ -40,7 +53,7 @@ extension MatchManager: GKMatchDelegate {
     
     func match(_ match: GKMatch, player: GKPlayer, didChange state: GKPlayerConnectionState) {
         guard state == .disconnected && !isGameOver else { return }
-        let alert = UIAlertController(title: "Player Disconnected", message: "The other player disconnected from the game.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "プレイヤーの中断", message: "プレーヤーがゲームを中断しました", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
             self.match?.disconnect()
         })

@@ -51,7 +51,7 @@ struct DrawingView: UIViewRepresentable {
         
         func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
             guard canvasView.isUserInteractionEnabled else { return }
-            matchManager.sendData(canvasView.drawing.dataRepresentation(), mode: .reliable)
+            matchManager.sendDrawing(canvasView.drawing)
         }
     }
 }

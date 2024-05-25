@@ -8,6 +8,7 @@
 import Foundation
 import GameKit
 import PencilKit
+import Combine
 
 class MatchManager: NSObject, ObservableObject {
     @Published var inGame: Bool = false
@@ -23,7 +24,7 @@ class MatchManager: NSObject, ObservableObject {
     @Published var remainingTime = maxTimeRemaining {
         willSet {
             if isTimerKeeper {
-                sendString("timer:\(newValue)")
+                sendCommand(.timer, parameter: "\(newValue)")
                 if newValue < 0 {
                     gameOver()
                 }
@@ -42,6 +43,17 @@ class MatchManager: NSObject, ObservableObject {
     var rootViewController: UIViewController? {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         return windowScene?.windows.first?.rootViewController
+    }
+    private var cancellable: AnyCancellable?
+
+    override init() {
+        super.init()
+        cancellable = Timer.publish(every: 1.0, on: .main, in: .common)
+            .autoconnect()
+            .sink { [unowned self] _ in
+                guard self.isTimerKeeper else { return }
+                self.remainingTime -= 1
+            }
     }
     
     func authenticationUser() {
@@ -87,7 +99,7 @@ class MatchManager: NSObject, ObservableObject {
         otherPlayer = self.match?.players.first
         drawPrompt = everydayObjects.randomElement()!
         
-        sendString("begin:\(playerUUIDKey)")
+        sendCommand(.begin, parameter: playerUUIDKey)
     }
     func swapRole() {
         score += 1
@@ -97,6 +109,7 @@ class MatchManager: NSObject, ObservableObject {
     
     func gameOver() {
         isGameOver = true
+        sendCommand(.gameOver, parameter: "")
         match?.disconnect()
     }
     
@@ -118,16 +131,12 @@ class MatchManager: NSObject, ObservableObject {
         playerUUIDKey = UUID().uuidString
     }
     
-    func recevedString(_ message: String) {
-        let messageSplit = message.split(separator: ":")
-        guard let messagePrefix = messageSplit.first else { return }
-        let parameter = String(messageSplit.last ?? "")
-        
-        switch messagePrefix {
-        case "begin":
+    func recevedString(_ signature: CommunicationSignature, parameter: String) {
+        switch signature {
+        case .begin:
             if playerUUIDKey == parameter {
                 playerUUIDKey = UUID().uuidString
-                sendString("begin:\(playerUUIDKey)")
+                sendCommand(.begin, parameter: playerUUIDKey)
                 break
             }
             
@@ -135,34 +144,30 @@ class MatchManager: NSObject, ObservableObject {
             inGame = true
             isTimerKeeper = currentlyDrawing
             
-            if isTimerKeeper {
-                countdownTimer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
-            }
-            
-        case "timer":
+        case .timer:
             remainingTime = Int(parameter) ?? 0
             
-        case "guess":
+        case .guess:
             var guessCorrect = false
             if parameter.lowercased() == drawPrompt {
-                sendString("correct:\(parameter)")
+                sendCommand(.correct, parameter: parameter)
                 swapRole()
                 guessCorrect = true
             } else {
-                sendString("incorrect:\(parameter)")
+                sendCommand(.incorrect, parameter: parameter)
             }
             
             appendPastGuess(guess: parameter, correct: guessCorrect)
             
-        case "correct":
+        case .correct:
             swapRole()
             appendPastGuess(guess: parameter, correct: true)
             
-        case "incorrect":
+        case .incorrect:
             appendPastGuess(guess: parameter, correct: false)
             
-        default:
-            break
+        case .gameOver:
+            isGameOver = true
         }
     }
     

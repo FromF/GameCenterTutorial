@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-var countdownTimer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
-
 struct GameView: View {
     @ObservedObject var matchManager: MatchManager
     @State var drawingGuess = ""
@@ -19,7 +17,7 @@ struct GameView: View {
             return
         }
         
-        matchManager.sendString("guess:\(drawingGuess)")
+        matchManager.sendCommand(.guess, parameter: drawingGuess)
         drawingGuess = ""
     }
 
@@ -77,10 +75,6 @@ struct GameView: View {
             } // VStack
             .ignoresSafeArea()
         } // ZStack
-        .onReceive(countdownTimer) { timeRemaining in
-            guard matchManager.isTimerKeeper else { return }
-            matchManager.remainingTime -= 1
-        }
     }
     
     var topBar: some View {

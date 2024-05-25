@@ -50,3 +50,13 @@ struct PastGuess: Identifiable {
 
 let maxTimeRemaining = 100
 
+let communicationStringPrefix = "strData"
+
+enum CommunicationSignature: String {
+    case begin = "begin"
+    case timer = "timer"
+    case guess = "guess"
+    case correct = "correct"
+    case incorrect = "incorrect"
+    case gameOver = "gameOver"
+}
