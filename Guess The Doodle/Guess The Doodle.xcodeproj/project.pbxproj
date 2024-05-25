@@ -20,6 +20,7 @@
 		9D3EB1242C0071C300C6B32F /* debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB1232C0071C300C6B32F /* debug.swift */; };
 		9D3EB1262C00749200C6B32F /* MatchManager- GKMatchmaker+ViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB1252C00749200C6B32F /* MatchManager- GKMatchmaker+ViewControllerDelegate.swift */; };
 		9D3EB1282C0075A300C6B32F /* MatchManager+GKMatchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB1272C0075A300C6B32F /* MatchManager+GKMatchDelegate.swift */; };
+		9D3EB1492C01B10000C6B32F /* MatchManager+GKLocalPlayerListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3EB1482C01B10000C6B32F /* MatchManager+GKLocalPlayerListener.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		9D3EB1232C0071C300C6B32F /* debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = debug.swift; sourceTree = "<group>"; };
 		9D3EB1252C00749200C6B32F /* MatchManager- GKMatchmaker+ViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatchManager- GKMatchmaker+ViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		9D3EB1272C0075A300C6B32F /* MatchManager+GKMatchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatchManager+GKMatchDelegate.swift"; sourceTree = "<group>"; };
+		9D3EB1482C01B10000C6B32F /* MatchManager+GKLocalPlayerListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MatchManager+GKLocalPlayerListener.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				9D3EB1182C00339C00C6B32F /* MatchManager.swift */,
 				9D3EB1252C00749200C6B32F /* MatchManager- GKMatchmaker+ViewControllerDelegate.swift */,
 				9D3EB1272C0075A300C6B32F /* MatchManager+GKMatchDelegate.swift */,
+				9D3EB1482C01B10000C6B32F /* MatchManager+GKLocalPlayerListener.swift */,
 				9D3EB11A2C0033B400C6B32F /* Misc.swift */,
 				9D3EB10C2C00320C00C6B32F /* Assets.xcassets */,
 				9D3EB10E2C00320C00C6B32F /* Preview Content */,
@@ -168,6 +171,7 @@
 			files = (
 				9D3EB10B2C00320B00C6B32F /* ContentView.swift in Sources */,
 				9D3EB1192C00339C00C6B32F /* MatchManager.swift in Sources */,
+				9D3EB1492C01B10000C6B32F /* MatchManager+GKLocalPlayerListener.swift in Sources */,
 				9D3EB1282C0075A300C6B32F /* MatchManager+GKMatchDelegate.swift in Sources */,
 				9D3EB1172C00338500C6B32F /* MenuView.swift in Sources */,
 				9D3EB1262C00749200C6B32F /* MatchManager- GKMatchmaker+ViewControllerDelegate.swift in Sources */,

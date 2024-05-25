@@ -54,6 +54,9 @@ class MatchManager: NSObject, ObservableObject {
                 guard self.isTimerKeeper else { return }
                 self.remainingTime -= 1
             }
+        
+        // 参加依頼を受付できるようにする
+        GKLocalPlayer.local.register(self)
     }
     
     func authenticationUser() {
